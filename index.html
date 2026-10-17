@@ -1223,14 +1223,18 @@
       function completeBoot(){if(bootDismissed)return;setBootProgress(1);qLoader.classList.add('complete');setTimeout(function(){dismissBoot(false)},160)}
       function drawBoot(now){if(!bootStart)bootStart=now;var progress=Math.min((now-bootStart)/1200,1);setBootProgress(progress);if(progress<1){bootFrame=requestAnimationFrame(drawBoot)}else completeBoot()}
       function skipBoot(){dismissBoot(true)}
-      bootOverlay.addEventListener('click',skipBoot);bootOverlay.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();skipBoot()}});if(reduceMotion){completeBoot()}else{bootFrame=requestAnimationFrame(drawBoot)};
+      bootOverlay.addEventListener('click',skipBoot);bootOverlay.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();skipBoot()}});
+      /* v2.9.2 — login BEFORE loader: replay boot after auth */
+      function replayBoot(){bootDismissed=false;bootStart=0;qLoader.classList.remove('complete');setBootProgress(0);bootOverlay.hidden=false;bootOverlay.classList.remove('exit');document.body.classList.add('booting');if(reduceMotion){completeBoot()}else{bootFrame=requestAnimationFrame(drawBoot)}}
+      window.quotientReplayBoot=replayBoot;
+      if(hasQuotientSession()){if(reduceMotion){completeBoot()}else{bootFrame=requestAnimationFrame(drawBoot)}}else{bootOverlay.hidden=true;var _ao0=document.getElementById('auth-overlay');if(_ao0)_ao0.hidden=false}
       /* v2.9.1 — auth gate wiring */
       (function(){
         var overlay=document.getElementById('auth-overlay'),status=document.getElementById('auth-status');
         function setSession(type){try{localStorage.setItem('quotient_session',JSON.stringify({type:type,ts:Date.now()}))}catch(e){}}
         function clearSession(){try{localStorage.removeItem('quotient_session')}catch(e){}}
         function setStatus(msg){if(status)status.textContent=msg}
-        function enterAs(type){setSession(type);if(overlay)overlay.hidden=true;setStatus('');enterApp();if(window.QSFX&&QSFX.click)QSFX.click()}
+        function enterAs(type){setSession(type);if(overlay)overlay.hidden=true;setStatus('');if(window.quotientReplayBoot)window.quotientReplayBoot();else enterApp();if(window.QSFX&&QSFX.click)QSFX.click()}
         var guest=document.getElementById('auth-guest');if(guest)guest.addEventListener('click',function(){enterAs('guest')});
         var epic=document.getElementById('auth-epic');if(epic)epic.addEventListener('click',function(){setStatus('EPIC LINK — PENDING BACKEND V1');if(window.QSFX&&QSFX.click)QSFX.click()});
         var steam=document.getElementById('auth-steam');if(steam)steam.addEventListener('click',function(){setStatus('STEAM LINK — PENDING BACKEND V1');if(window.QSFX&&QSFX.click)QSFX.click()});
