@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="dark">
-  <title>QUOTIENT</title>
+  <title>QUOTIENT — 2AM_tayK Player Passport</title>
   <meta name="description" content="2AM_tayK’s QUOTIENT player passport: real Fortnite lifetime stats, Gold rank, GQ 538, and a cross-game intelligence profile.">
   <meta property="og:title" content="QUOTIENT — 2AM_tayK Player Passport">
   <meta property="og:description" content="Real Fortnite lifetime stats meet the QUOTIENT cross-game player passport.">
@@ -813,31 +813,10 @@
     .pcard-friend.fr-white{border-top-color:var(--fr-white)}.pcard-friend.fr-white .pcard-shield{background:var(--fr-white);color:#090909}
     .cards-hint{margin:2px 0 0;text-align:center;color:#8D8D8D;font:600 7px var(--terminal-mono);letter-spacing:.1em}
     @media(prefers-reduced-motion:reduce){.pcard{transition:none}}
-    /* v2.9.1 — auth gate: cold sign-in screen between boot and app */
-    .auth-overlay{position:fixed;z-index:195;inset:0;display:grid;place-items:center;padding:24px;background:#000;color:#FAFAFA;font-family:var(--terminal-mono)}
-    .auth-overlay[hidden]{display:none}
-    .auth-card{width:min(340px,100%);display:grid;justify-items:center;text-align:center;animation:authIn .32s var(--hud-ease) both}
-    @keyframes authIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-    .auth-q{width:62px;height:62px;margin-bottom:20px}
-    .auth-q-outline{fill:none;stroke:#fff;stroke-width:2}
-    .auth-brand{font:700 12px/1 "IBM Plex Mono",monospace;letter-spacing:.34em;color:#fff;margin-bottom:12px;text-indent:.34em}
-    .auth-title{margin:0 0 8px;font:700 30px/1 var(--terminal-mono);letter-spacing:.03em}
-    .auth-sub{margin:0 0 28px;color:var(--muted);font-size:11px;letter-spacing:.02em;line-height:1.6}
-    .auth-btn{width:100%;padding:16px;border-radius:12px;font:700 11px/1 "IBM Plex Mono",monospace;letter-spacing:.16em;cursor:pointer;border:1px solid transparent;transition:transform .12s var(--hud-ease),background .12s,border-color .12s}
-    .auth-btn:active{transform:scale(.97)}
-    .auth-epic{background:#fff;color:#0a0a0a;margin-bottom:10px}
-    .auth-epic:hover{background:#e6e6e6}
-    .auth-steam{background:#1b2838;color:#66c0f4;margin-bottom:20px;border-color:rgba(102,192,244,.28)}
-    .auth-steam:hover{background:#25344b}
-    .auth-divider{display:flex;align-items:center;gap:12px;width:100%;margin-bottom:20px;color:var(--faint);font:600 9px "IBM Plex Mono",monospace;letter-spacing:.22em}
-    .auth-divider:before,.auth-divider:after{content:"";flex:1;height:1px;background:var(--line)}
-    .auth-guest{background:transparent;color:#fff;border-color:rgba(255,255,255,.24)}
-    .auth-guest:hover{border-color:#fff}
-    .auth-status{margin:16px 0 0;min-height:14px;color:var(--money);font:600 9px/1.5 "IBM Plex Mono",monospace;letter-spacing:.1em}
-    .auth-note{margin:22px 0 0;color:var(--faint);font:600 8px/1.7 "IBM Plex Mono",monospace;letter-spacing:.12em}
-    .quick-signout{width:100%;margin-top:12px;padding:10px;border:1px solid var(--line);border-radius:10px;background:transparent;color:var(--muted);font:700 9px/1 "IBM Plex Mono",monospace;letter-spacing:.18em;cursor:pointer}
-    .quick-signout:hover{color:#fff;border-color:rgba(255,255,255,.3)}
-    @media(prefers-reduced-motion:reduce){.auth-card{animation:none}}
+    /* Live backend skin art: real cosmetic render fills the rookie-card shields. */
+    .has-skin-art{position:relative;overflow:hidden!important}
+    .has-skin-art:after{display:none!important}
+    .skin-art-img{position:absolute;inset:0;z-index:1;width:100%;height:100%;display:block;object-fit:cover;object-position:top center}
   </style>
 </head>
 <body data-rank="gold" class="booting">
@@ -857,23 +836,6 @@
       <span class="boot-skip-copy">TAP ANYWHERE OR PRESS ENTER TO SKIP</span>
     </div>
   </section>
-  <section class="auth-overlay" id="auth-overlay" hidden aria-label="Sign in to QUOTIENT">
-    <div class="auth-card">
-      <svg class="auth-q" viewBox="0 0 100 100" aria-hidden="true">
-        <circle class="auth-q-outline" cx="42" cy="42" r="30"/>
-        <line class="auth-q-outline" x1="63" y1="63" x2="86" y2="86"/>
-      </svg>
-      <div class="auth-brand">QUOTIENT</div>
-      <h2 class="auth-title">SIGN IN</h2>
-      <p class="auth-sub">Link your gaming accounts.<br>Your Quotient builds itself.</p>
-      <button class="auth-btn auth-epic" id="auth-epic" type="button">EPIC GAMES</button>
-      <button class="auth-btn auth-steam" id="auth-steam" type="button">STEAM</button>
-      <div class="auth-divider"><span>OR</span></div>
-      <button class="auth-btn auth-guest" id="auth-guest" type="button">CONTINUE AS GUEST</button>
-      <p class="auth-status" id="auth-status" role="status" aria-live="polite"></p>
-      <p class="auth-note">DEMO BUILD — ACCOUNT SYNC<br>GOES LIVE WITH BACKEND V1</p>
-    </div>
-  </section>
   <header class="command-header" inert>
     <div class="command-brand"><span class="brand-mark">QUOTIENT // V2.6</span><span class="system-live" aria-label="Online"><i></i></span><span class="engine-badge" title="Data engine state object ready — live sync pending backend connection"><i></i>ENGINE READY</span></div>
     <button class="sfx-toggle" id="sfx-toggle" type="button" aria-pressed="false" aria-label="Unmute sound effects" title="Sound effects (muted)"><svg class="sfx-off-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M16 9l6 6m0-6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><svg class="sfx-on-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
@@ -882,7 +844,6 @@
       <div class="profile-quick" id="profile-quick" hidden>
         <div class="quick-head"><strong>2AM_TAYK</strong><span>GOLD // GQ 538</span></div>
         <div class="quick-grid"><div class="quick-stat"><span>PLAYER WORTH</span><strong class="money">$838K</strong></div><div class="quick-stat"><span>K/D</span><strong>2.73</strong></div><div class="quick-stat"><span>MATCHES</span><strong>1,978</strong></div><div class="quick-stat"><span>WINS</span><strong>58</strong></div></div>
-        <button class="quick-signout" id="quick-signout" type="button">SIGN OUT</button>
       </div>
     </div>
   </header>
@@ -1216,30 +1177,11 @@
       var reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches,mobileRetro=window.matchMedia('(max-width: 480px)').matches;
       var bootOverlay=document.getElementById('boot-overlay'),qLoader=document.getElementById('q-loader'),qValue=document.getElementById('q-progress-value'),qLiquid=document.getElementById('q-liquid'),bootFrame=0,bootStart=0,bootDismissed=false;
       function setBootProgress(progress){progress=Math.max(0,Math.min(1,progress));var shapeTop=10,shapeBottom=136,fillProgress=Math.min(1,progress*1.15),height=(shapeBottom-shapeTop)*fillProgress;qValue.textContent=Math.round(progress*100)+'%';qLiquid.setAttribute('y',(shapeBottom-height).toFixed(2));qLiquid.setAttribute('height',height.toFixed(2))}
-      function hasQuotientSession(){try{return !!localStorage.getItem('quotient_session')}catch(e){return false}}
-      function enterApp(){document.body.classList.add('home-entering');[].slice.call(document.querySelectorAll('.command-header,.page,.bottom-nav')).forEach(function(el){el.inert=false});requestAnimationFrame(function(){document.body.classList.remove('booting');runProfileCounters()});setTimeout(function(){document.body.classList.remove('home-entering')},450)}
-      function routeAfterBoot(){if(hasQuotientSession()){enterApp()}else{var ao=document.getElementById('auth-overlay');if(ao)ao.hidden=false}}
-      function dismissBoot(skipped){if(bootDismissed)return;bootDismissed=true;cancelAnimationFrame(bootFrame);if(skipped)setBootProgress(1);if(reduceMotion){bootOverlay.hidden=true;document.body.classList.remove('home-entering');routeAfterBoot();return}bootOverlay.classList.add('exit');setTimeout(function(){bootOverlay.hidden=true;document.body.classList.remove('home-entering');routeAfterBoot()},210)}
+      function dismissBoot(skipped){if(bootDismissed)return;bootDismissed=true;cancelAnimationFrame(bootFrame);if(skipped)setBootProgress(1);document.body.classList.add('home-entering');[].slice.call(document.querySelectorAll('.command-header,.page,.bottom-nav')).forEach(function(el){el.inert=false});requestAnimationFrame(function(){document.body.classList.remove('booting');runProfileCounters()});if(reduceMotion){bootOverlay.hidden=true;document.body.classList.remove('home-entering');return}bootOverlay.classList.add('exit');setTimeout(function(){bootOverlay.hidden=true;document.body.classList.remove('home-entering')},210)}
       function completeBoot(){if(bootDismissed)return;setBootProgress(1);qLoader.classList.add('complete');setTimeout(function(){dismissBoot(false)},160)}
       function drawBoot(now){if(!bootStart)bootStart=now;var progress=Math.min((now-bootStart)/1200,1);setBootProgress(progress);if(progress<1){bootFrame=requestAnimationFrame(drawBoot)}else completeBoot()}
       function skipBoot(){dismissBoot(true)}
-      bootOverlay.addEventListener('click',skipBoot);bootOverlay.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();skipBoot()}});
-      /* v2.9.2 — login BEFORE loader: replay boot after auth */
-      function replayBoot(){bootDismissed=false;bootStart=0;qLoader.classList.remove('complete');setBootProgress(0);bootOverlay.hidden=false;bootOverlay.classList.remove('exit');document.body.classList.add('booting');if(reduceMotion){completeBoot()}else{bootFrame=requestAnimationFrame(drawBoot)}}
-      window.quotientReplayBoot=replayBoot;
-      if(hasQuotientSession()){if(reduceMotion){completeBoot()}else{bootFrame=requestAnimationFrame(drawBoot)}}else{bootOverlay.hidden=true;var _ao0=document.getElementById('auth-overlay');if(_ao0)_ao0.hidden=false}
-      /* v2.9.1 — auth gate wiring */
-      (function(){
-        var overlay=document.getElementById('auth-overlay'),status=document.getElementById('auth-status');
-        function setSession(type){try{localStorage.setItem('quotient_session',JSON.stringify({type:type,ts:Date.now()}))}catch(e){}}
-        function clearSession(){try{localStorage.removeItem('quotient_session')}catch(e){}}
-        function setStatus(msg){if(status)status.textContent=msg}
-        function enterAs(type){setSession(type);if(overlay)overlay.hidden=true;setStatus('');if(window.quotientReplayBoot)window.quotientReplayBoot();else enterApp();if(window.QSFX&&QSFX.click)QSFX.click()}
-        var guest=document.getElementById('auth-guest');if(guest)guest.addEventListener('click',function(){enterAs('guest')});
-        var epic=document.getElementById('auth-epic');if(epic)epic.addEventListener('click',function(){setStatus('EPIC LINK — PENDING BACKEND V1');if(window.QSFX&&QSFX.click)QSFX.click()});
-        var steam=document.getElementById('auth-steam');if(steam)steam.addEventListener('click',function(){setStatus('STEAM LINK — PENDING BACKEND V1');if(window.QSFX&&QSFX.click)QSFX.click()});
-        var signout=document.getElementById('quick-signout');if(signout)signout.addEventListener('click',function(e){e.stopPropagation();clearSession();location.reload()});
-      })();
+      bootOverlay.addEventListener('click',skipBoot);bootOverlay.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();skipBoot()}});if(reduceMotion){completeBoot()}else{bootFrame=requestAnimationFrame(drawBoot)};
       var sparkReadout=document.getElementById('spark-readout'),sparkPoints=[].slice.call(document.querySelectorAll('.valuation-point'));sparkPoints.forEach(function(point){function showPoint(){sparkReadout.textContent=point.dataset.label}function resetPoint(){sparkReadout.textContent='LIVE INDEX // $838K'}point.addEventListener('pointerenter',showPoint);point.addEventListener('focus',showPoint);point.addEventListener('pointerleave',resetPoint);point.addEventListener('blur',resetPoint)});
       var profileCapsule=document.getElementById('profile-capsule'),profileQuick=document.getElementById('profile-quick');function setQuickProfile(open){profileQuick.hidden=!open;profileCapsule.setAttribute('aria-expanded',open?'true':'false')}profileCapsule.addEventListener('click',function(e){e.stopPropagation();setQuickProfile(profileQuick.hidden)});document.addEventListener('click',function(e){if(!profileQuick.hidden&&!e.target.closest('.header-profile-wrap'))setQuickProfile(false)});document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!profileQuick.hidden){setQuickProfile(false);profileCapsule.focus()}});
       function markNumericReadouts(root){var scope=root&&root.querySelectorAll?root:document;[].slice.call(scope.querySelectorAll('span,strong,em,b,small,text,.chat-bubble')).forEach(function(el){var direct=[].slice.call(el.childNodes).filter(function(node){return node.nodeType===3}).map(function(node){return node.nodeValue}).join(' ').trim();if(/(?:^|[\s·#(/])\$?\d[\d,.]*(?::\d+)?(?:%|K|M)?(?:\s*K\/D)?(?=$|[\s·),/—])|\bK\/D\b/.test(direct))el.classList.add('numeric-readout')})}markNumericReadouts(document);var numericObserver=new MutationObserver(function(records){records.forEach(function(record){if(record.type==='characterData'){markNumericReadouts(record.target.parentElement||document)}else{[].slice.call(record.addedNodes).forEach(function(node){if(node.nodeType===1){if(node.matches&&node.matches('span,strong,em,b,small,text,.chat-bubble')){var direct=node.textContent.trim();if(/\d|K\/D/.test(direct))node.classList.add('numeric-readout')}markNumericReadouts(node)}})}})});numericObserver.observe(document.body,{childList:true,subtree:true,characterData:true});
@@ -1387,6 +1329,248 @@ window.buildStoryCanvas=buildStoryCanvas;
       var btn=document.getElementById('copy-story-image');if(!btn)return;
       function toast(msg){var t=document.getElementById('toast');if(!t)return;t.textContent=msg;t.classList.add('show');clearTimeout(t._v29);t._v29=setTimeout(function(){t.classList.remove('show')},2400)}
       btn.addEventListener('click',function(){if(!window.buildStoryCanvas){toast('Story renderer unavailable.');return}window.buildStoryCanvas(function(canvas){if(!canvas.toBlob||!navigator.clipboard||!window.ClipboardItem){toast('Clipboard images are not supported here — use Download instead.');return}canvas.toBlob(function(blob){if(!blob){toast('Could not render the story image.');return}navigator.clipboard.write([new ClipboardItem({'image/png':blob})]).then(function(){toast('Story image copied — paste it anywhere.');if(window.QSFX)QSFX.chime()},function(){toast('Clipboard blocked by the browser — use Download instead.')})},'image/png')})});
+    })();
+  </script>
+  <script>
+    /* V3.0 — live backend wiring (QUOTIENT API on Replit).
+       On load, fetch the player's asset bundle and merge it into the
+       window.quotientData flow. Contract:
+       - 4s timeout via AbortController; ANY failure (offline, asleep
+         backend, non-JSON shield page) silently keeps the demo snapshot.
+       - Skin art applies whenever the bundle provides skin_image_url.
+       - Demo stats / GQ / K-D / win rate / matches / worth are replaced
+         ONLY when live === true AND stats and gq are both non-null.
+       - The header badge may read LIVE only after live stats applied. */
+    (function(){
+      var API_BASE='https://077cfeec-d63a-40d0-8835-669c738f6802-00-1npt8bl7n4s5j.spock.replit.dev';
+      var USERNAME='2AM_tayK';
+      if(!window.fetch)return;
+      var controller=('AbortController' in window)?new AbortController():null;
+      var timer=setTimeout(function(){if(controller)controller.abort()},4000);
+      fetch(API_BASE+'/api/assets/'+encodeURIComponent(USERNAME),{
+        signal:controller?controller.signal:undefined,
+        headers:{'Accept':'application/json'}
+      }).then(function(res){
+        clearTimeout(timer);
+        if(!res.ok)throw new Error('backend status '+res.status);
+        return res.json();
+      }).then(function(data){
+        if(!data||typeof data!=='object')return;
+        applyBundle(data);
+      }).catch(function(){clearTimeout(timer)});
+
+      function num(v){var n=(typeof v==='string')?parseFloat(v):v;return (typeof n==='number'&&isFinite(n))?n:null}
+      function fmtInt(n){return Math.round(n).toLocaleString('en-US')}
+      function fmt2(n){return n.toFixed(2)}
+      /* Player worth mirrors the backend curve (scoring/quotient.py
+         player_worth): raw = (gq/1000)^4 * $10,000,000. */
+      function worthParts(raw){
+        if(raw>=1000000)return{label:'$'+(raw/1000000).toFixed(1)+'M',count:raw/1000000,decimals:1,suffix:'M'};
+        if(raw>=1000)return{label:'$'+Math.round(raw/1000)+'K',count:Math.round(raw/1000),decimals:0,suffix:'K'};
+        return{label:'$'+Math.round(raw),count:Math.round(raw),decimals:0,suffix:''};
+      }
+      function worthFromPayload(data,gqObj,gqVal){
+        var w=(data.worth!=null)?data.worth:(gqObj&&gqObj.worth!=null?gqObj.worth:null);
+        if(typeof w==='string'&&w)return{label:w,count:null,decimals:0,suffix:null};
+        if(w&&typeof w==='object'){
+          if(typeof w.label==='string'&&w.label)return{label:w.label,count:null,decimals:0,suffix:null};
+          var raw=num(w.worth!=null?w.worth:w.raw);
+          if(raw!==null)return worthParts(raw);
+        }
+        var rawNum=num(w);
+        if(rawNum!==null)return worthParts(rawNum);
+        if(gqVal!==null)return worthParts(Math.round(Math.pow(Math.max(gqVal,0)/1000,4)*10000000));
+        return null;
+      }
+      function countedText(el,value){
+        var decimals=parseInt(el.dataset.decimals||'0',10),group=el.dataset.group==='true';
+        return (el.dataset.prefix||'')+value.toLocaleString('en-US',{useGrouping:group,minimumFractionDigits:decimals,maximumFractionDigits:decimals})+(el.dataset.suffix||'');
+      }
+      function updateCounted(demoValue,newValue){
+        var els=document.querySelectorAll('[data-count="'+demoValue+'"]');
+        [].slice.call(els).forEach(function(el){
+          el.dataset.count=String(newValue);
+          el.dataset.counted='true';
+          el.textContent=countedText(el,newValue);
+        });
+      }
+      function applySkinArt(url,skinName){
+        if(typeof url!=='string'||url.indexOf('https://')!==0)return;
+        var probe=new Image();
+        probe.onload=function(){
+          var targets=[];
+          [].slice.call(document.querySelectorAll('.rc-shield,.player-card-shield')).forEach(function(sh){targets.push(sh)});
+          [].slice.call(document.querySelectorAll('.pcard-mine')).forEach(function(card){
+            var top=card.querySelector('.pcard-top strong');
+            if(top&&top.textContent.trim()==='ROOKIE CARD'){
+              var sh=card.querySelector('.pcard-shield');
+              if(sh)targets.push(sh);
+            }
+          });
+          targets.forEach(function(sh){
+            if(sh.querySelector('.skin-art-img'))return;
+            sh.classList.add('has-skin-art');
+            sh.setAttribute('title',skinName?('Equipped skin: '+skinName):'Equipped Fortnite skin');
+            var img=document.createElement('img');
+            img.className='skin-art-img';
+            img.src=url;
+            img.alt=skinName?(skinName+' — equipped Fortnite skin'):'';
+            img.loading='lazy';
+            img.decoding='async';
+            sh.appendChild(img);
+          });
+        };
+        probe.src=url;
+      }
+      function nextRank(gq){
+        var ladder=[[250,'SILVER'],[450,'GOLD'],[600,'PLATINUM'],[750,'DIAMOND'],[850,'CHAMPION'],[950,'UNREAL']];
+        for(var i=0;i<ladder.length;i++){if(gq<ladder[i][0])return{diff:ladder[i][0]-gq,name:ladder[i][1]}}
+        return null;
+      }
+      function tileByLabel(label){
+        var tiles=document.querySelectorAll('.overview-stat-tile');
+        for(var i=0;i<tiles.length;i++){
+          var s=tiles[i].querySelector('span');
+          if(s&&s.textContent.trim()===label)return tiles[i];
+        }
+        return null;
+      }
+      function applyAxes(axes){
+        var map={
+          'GAME SENSE':(axes['Game Sense']!=null?axes['Game Sense']:axes.game_sense),
+          'MECHANICS & PRECISION':(axes['Mechanics & Precision']!=null?axes['Mechanics & Precision']:axes.mechanics_precision),
+          'SPATIAL AWARENESS':(axes['Spatial Awareness']!=null?axes['Spatial Awareness']:axes.spatial_awareness)
+        };
+        [].slice.call(document.querySelectorAll('.stat-deck .rookie-axis')).forEach(function(row){
+          var labelEl=row.querySelector('span'),strong=row.querySelector('strong'),meter=row.querySelector('.pixel-meter i');
+          if(!labelEl||!strong)return;
+          var v=num(map[labelEl.textContent.trim()]);
+          if(v===null||v===undefined)return;
+          strong.dataset.count=String(Math.round(v));
+          strong.dataset.counted='true';
+          strong.textContent=String(Math.round(v));
+          if(meter)meter.style.width=Math.max(0,Math.min(100,v))+'%';
+        });
+      }
+      function applyBundle(data){
+        var d=window.quotientData||(window.quotientData={});
+        d.backendLive=(data.live===true);
+        if(data.note)d.backendNote=data.note;
+        if(data.skin_name)d.skinName=data.skin_name;
+        if(data.skin_image_url){d.skinImageUrl=data.skin_image_url;applySkinArt(data.skin_image_url,data.skin_name)}
+        var gqObj=(data.gq&&typeof data.gq==='object')?data.gq:null;
+        var gqVal=num(gqObj?gqObj.gq:data.gq);
+        var stats=(data.stats&&typeof data.stats==='object')?data.stats:null;
+        if(!(data.live===true&&stats&&gqVal!==null))return;
+        var kd=num(stats.kd),matches=num(stats.matches),wins=num(stats.wins),
+            kills=num(stats.kills),deaths=num(stats.deaths),
+            winRate=num(stats.win_rate!=null?stats.win_rate:stats.winRate);
+        var rankRaw=(data.rank_badge&&data.rank_badge.tier)||(gqObj&&gqObj.rank)||data.rank||null;
+        var rank=rankRaw?String(rankRaw).toUpperCase():null;
+        var worth=worthFromPayload(data,gqObj,gqVal);
+        d.gq=gqVal;d.liveStats=true;
+        if(kd!==null)d.kd=kd;
+        if(matches!==null)d.matches=matches;
+        if(wins!==null)d.wins=wins;
+        if(winRate!==null)d.winRate=fmt2(winRate)+'%';
+        if(rank)d.rank=rank;
+        if(worth)d.worth=worth.label;
+        /* [data-count] mirrors of the core numbers. */
+        updateCounted('538',gqVal);
+        if(kd!==null)updateCounted('2.73',kd);
+        if(matches!==null)updateCounted('1978',matches);
+        if(wins!==null)updateCounted('58',wins);
+        if(worth){
+          [].slice.call(document.querySelectorAll('[data-count="838"]')).forEach(function(el){
+            if(worth.count!==null){el.dataset.count=String(worth.count);el.dataset.decimals=String(worth.decimals);el.dataset.suffix=worth.suffix;el.dataset.prefix='$'}
+            el.dataset.counted='true';
+            el.textContent=worth.label;
+          });
+        }
+        /* Text readouts that repeat the same core numbers. */
+        var nxt=nextRank(gqVal),nodes=[];
+        var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{
+          acceptNode:function(node){
+            var p=node.parentElement;
+            if(!p)return NodeFilter.FILTER_REJECT;
+            if(p.tagName==='SCRIPT'||p.tagName==='STYLE')return NodeFilter.FILTER_REJECT;
+            return NodeFilter.FILTER_ACCEPT;
+          }
+        });
+        var current;while((current=walker.nextNode()))nodes.push(current);
+        nodes.forEach(function(node){
+          var v=node.nodeValue;
+          if(!v||!/\d/.test(v))return;
+          var out=v;
+          out=out.replace(/GQ 538/g,'GQ '+gqVal);
+          if(worth)out=out.replace(/\$838K/g,worth.label);
+          if(kd!==null)out=out.replace(/2\.73/g,fmt2(kd));
+          if(matches!==null)out=out.replace(/1,978/g,fmtInt(matches));
+          if(winRate!==null)out=out.replace(/2\.93%/g,fmt2(winRate)+'%');
+          if(kills!==null)out=out.replace(/5,246/g,fmtInt(kills));
+          if(deaths!==null)out=out.replace(/1,920/g,fmtInt(deaths));
+          if(wins!==null){
+            out=out.replace(/58 LIFETIME WINS/g,fmtInt(wins)+' LIFETIME WINS');
+            out=out.replace(/58 wins/g,fmtInt(wins)+' wins');
+          }
+          if(nxt){
+            out=out.replace(/\+62 GQ TO PLATINUM/g,'+'+nxt.diff+' GQ TO '+nxt.name);
+            out=out.replace(/\+62 TO PLATINUM/g,'+'+nxt.diff+' TO '+nxt.name);
+          }
+          if(out.trim()==='538')out=String(gqVal);
+          else if(wins!==null&&out.trim()==='58')out=String(wins);
+          else if(nxt&&out.trim()==='+62')out='+'+nxt.diff;
+          if(out!==v)node.nodeValue=out;
+        });
+        /* Aria labels that embed the GQ score. */
+        [].slice.call(document.querySelectorAll('[aria-label]')).forEach(function(el){
+          var a=el.getAttribute('aria-label');
+          if(a&&a.indexOf('538')!==-1)el.setAttribute('aria-label',a.replace(/538/g,String(gqVal)));
+        });
+        /* Rating progress bar. */
+        var bar=document.querySelector('.rating-progress');
+        if(bar){
+          bar.setAttribute('aria-label','Gamer rating '+gqVal+' out of 1000');
+          var fill=bar.querySelector('i');
+          if(fill)fill.style.width=(Math.max(0,Math.min(1000,gqVal))/10)+'%';
+        }
+        /* Overview tile helper copy (kills / deaths / totals). */
+        var kdTile=tileByLabel('K/D RATIO');
+        if(kdTile&&kills!==null&&deaths!==null){
+          var kdSmall=kdTile.querySelector('small');
+          if(kdSmall)kdSmall.textContent=fmtInt(kills)+' KILLS / '+fmtInt(deaths)+' DEATHS';
+          kdTile.dataset.statMessage=fmtInt(kills)+' lifetime kills divided by '+fmtInt(deaths)+' deaths.';
+        }
+        var winTile=tileByLabel('WIN RATE');
+        if(winTile&&wins!==null&&matches!==null)winTile.dataset.statMessage=fmtInt(wins)+' lifetime wins across '+fmtInt(matches)+' matches.';
+        var matchTile=tileByLabel('MATCHES');
+        if(matchTile&&matches!==null)matchTile.dataset.statMessage=fmtInt(matches)+' real lifetime Fortnite matches.';
+        var gqTile=tileByLabel('GQ SCORE');
+        if(gqTile){
+          gqTile.dataset.statMessage='GQ '+gqVal+' places this profile in '+(rank||'Gold').toLowerCase()+' rank.';
+          var gqSmall=gqTile.querySelector('small');
+          if(gqSmall&&rank&&nxt)gqSmall.textContent=rank+' · +'+nxt.diff+' TO '+nxt.name;
+        }
+        /* Rank theming follows the backend tier when it is a known rank. */
+        var tierKey=rank?rank.toLowerCase():null;
+        var known=['bronze','silver','gold','platinum','diamond','champion','unreal'];
+        if(tierKey&&known.indexOf(tierKey)>-1){
+          document.body.setAttribute('data-rank',tierKey);
+          [].slice.call(document.querySelectorAll('.medallion')).forEach(function(m){m.setAttribute('data-rank',tierKey)});
+          var scoreRank=document.querySelector('.score-rank');if(scoreRank)scoreRank.textContent=rank;
+          var headerRank=document.querySelector('.header-rank');if(headerRank)headerRank.textContent=rank;
+          var goldRank=document.querySelector('.gold-rank');if(goldRank)goldRank.textContent=rank+' RANK';
+        }
+        /* Only now — live stats actually applied — may the badge say LIVE. */
+        var badge=document.querySelector('.engine-badge');
+        if(badge){
+          badge.title='Live backend connected — Fortnite stats synced from the QUOTIENT API';
+          [].slice.call(badge.childNodes).forEach(function(n){if(n.nodeType===3&&n.nodeValue.trim())n.nodeValue='LIVE'});
+        }
+        var axes=(gqObj&&gqObj.axes)||data.axes||null;
+        if(axes&&typeof axes==='object')applyAxes(axes);
+        if(window.console&&console.info)console.info('[QUOTIENT] Live backend stats applied for '+USERNAME+'.');
+      }
     })();
   </script>
   <script>
