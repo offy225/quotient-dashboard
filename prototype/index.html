@@ -1162,6 +1162,52 @@
       .sgame:hover .sg-t b{color:#fff}
       @media (max-width:480px){ .sgame .sg-bar{width:62px} }
     </style>
+    <style id="arc-art-fullframe">
+      /* ===== Full-frame game art — the whole cover, Epic-style, never a zoomed crop =====
+         All ARC key art is landscape (16:9; Fortnite wider, Apex square). The old
+         cards forced it into tall portrait boxes with cover-fit, so only the
+         middle slice survived — Warzone read "ARZO" because its title spans the
+         full width of the art, while Rocket League's narrow centered title was
+         the only one that survived the crop. Fix: every game surface is now
+         landscape, so the full width of the cover always shows, and the Library
+         flip-card fronts present the complete cover as a true 16:9 poster band
+         with the game name on the panel below it. Applies to mobile + desktop. */
+
+      /* Mobile home hero: tall portrait -> landscape showcase */
+      .hero-card{aspect-ratio:16/10.5; flex-basis:92%}
+      .hero-card img{object-position:center}
+
+      /* Mobile rails (trending / recently played / similar games): portrait -> landscape tiles.
+         The image wrapper is a <span> (inline by default), which silently ignores
+         aspect-ratio — so it is made a block box with the image filling it absolutely,
+         the same construction as the news cards. */
+      .gcard{flex-basis:196px}
+      .gcard .gc-img{display:block; aspect-ratio:16/10}
+      .gcard .gc-img img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center}
+
+      /* Desktop featured / recent grids: keep the landscape ratio, hold dead center.
+         Same inline-span fix for the feature image wrapper. */
+      #view-desktop .feat .f-img{display:block}
+      #view-desktop .feat .f-img img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+      #view-desktop .feat img{object-position:center}
+
+      /* Library flip cards: the full cover as a 16:9 poster band.
+         Card is 3/4.3, so a band 39.25% of its height is exactly 16:9 —
+         cover-fit inside the band crops nothing for 16:9 art. */
+      #libGrid .cc-front, #dLibGrid .cc-front{background:#0B0C0E}
+      #libGrid .cc-front img, #dLibGrid .cc-front img{
+        top:0; bottom:auto; height:39.25%; object-fit:cover; object-position:center;
+        border-bottom:1px solid var(--line2)}
+      #libGrid .cc-front .cc-shade, #dLibGrid .cc-front .cc-shade{
+        top:0; bottom:auto; height:39.25%;
+        background:linear-gradient(180deg, rgba(0,0,0,.28), transparent 45%, transparent 72%, rgba(11,12,14,.55))}
+
+      /* Game detail heroes: show the key art at its own ratio instead of a slice */
+      .detail .d-hero{height:auto; min-height:0; aspect-ratio:16/9}
+      .detail .d-hero img{object-position:center}
+      #view-desktop .dd-hero{aspect-ratio:16/9}
+      #view-desktop .dd-hero img{object-position:center}
+    </style>
   </head>
   <body>
     <!-- APP LOADING SPLASH -->
