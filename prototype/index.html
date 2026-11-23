@@ -1123,6 +1123,45 @@
       #view-desktop #dLibGrid .cc-front img[src*="apex"]{object-position:50% 42%}
       #view-desktop #dLibGrid .cc-front img[src*="rocket"]{object-position:50% 50%}
     </style>
+    <style id="arc-skillmap">
+      /* ===== Skill Map — how good you are across every game, on one map =====
+         A mind map up top (you in the middle, your core skills branching out)
+         and a skill tree underneath (every game as a node on one spine, with
+         its GQ, tier, strongest skill, and the climb to the next tier).
+         ARC rates skill — it never converts your life into days played. */
+      .smap{margin-top:14px}
+      .smap-core{border:1px solid var(--line); border-radius:10px; background:var(--panel); padding:16px 14px; text-align:center}
+      .smap-core .sc-lab{font-family:var(--mono); font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--dim)}
+      .smap-core b{display:block; font-size:34px; font-weight:500; line-height:1.1; margin-top:6px; font-variant-numeric:tabular-nums}
+      .smap-core .sc-sub{display:block; font-size:12px; color:var(--mut); margin-top:3px}
+      .smap-stem{width:1px; height:22px; background:var(--line2); margin:0 auto}
+      .smap-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+      #view-desktop .smap-grid{grid-template-columns:repeat(3,1fr)}
+      @media (max-width:560px){ #view-desktop .smap-grid{grid-template-columns:1fr 1fr} }
+      .snode{border:1px solid var(--line); border-radius:10px; padding:12px 13px; background:var(--panel)}
+      .snode-top{display:flex; justify-content:space-between; align-items:baseline; gap:8px}
+      .snode-top b{font-size:13.5px; font-weight:500}
+      .snode .slvl{font-family:var(--mono); font-size:12px; color:var(--ink); font-variant-numeric:tabular-nums; white-space:nowrap}
+      .snode .slvl small{color:var(--dim); font-size:10px}
+      .snode .sfrom{display:block; margin-top:3px; font-size:11px; color:var(--dim); line-height:1.4}
+      .sbar{height:4px; background:#222329; border-radius:99px; margin-top:10px; overflow:hidden}
+      .sbar i{display:block; height:100%; background:#F0F0F0; border-radius:99px}
+      .smap-treehead{display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin:22px 0 2px; font-size:13.5px; font-weight:500}
+      .smap-treehead span{font-size:11px; color:var(--dim); font-weight:400; text-align:right}
+      .stree{position:relative}
+      .stree::before{content:""; position:absolute; left:5px; top:20px; bottom:20px; width:1px; background:var(--line2)}
+      .sgame{position:relative; display:flex; align-items:center; gap:14px; width:100%; text-align:left; padding:13px 0 13px 24px; border-top:1px solid var(--line); min-height:58px; color:var(--ink)}
+      .sgame .sdot{position:absolute; left:0; top:50%; transform:translateY(-50%); width:11px; height:11px; border-radius:50%; background:var(--bg); border:2px solid #F0F0F0; z-index:1; flex:none}
+      .sgame .sg-t{flex:1; min-width:0}
+      .sgame .sg-t b{display:block; font-size:14px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+      .sgame .sg-t span{display:block; font-size:11.5px; color:var(--mut); margin-top:2px}
+      .sgame .sg-next{flex:none; text-align:right}
+      .sgame .sg-next b{display:block; font-size:12px; font-weight:500; font-variant-numeric:tabular-nums}
+      .sgame .sg-bar{display:block; width:92px; height:4px; background:#222329; border-radius:99px; margin-top:7px; overflow:hidden}
+      .sgame .sg-bar i{display:block; height:100%; background:#F0F0F0; border-radius:99px}
+      .sgame:hover .sg-t b{color:#fff}
+      @media (max-width:480px){ .sgame .sg-bar{width:62px} }
+    </style>
   </head>
   <body>
     <!-- APP LOADING SPLASH -->
@@ -1169,7 +1208,7 @@
                 </div>
                 <p class="ovw-note">Top 8% of Fortnite players · win rate up 18% on weekends</p>
                 <div class="ovw-stats">
-                  <div><b>412.6</b><span>Hours — Fortnite</span></div>
+                  <div><b>Top 8%</b><span>Fortnite rank</span></div>
                   <div><b>34</b><span>Clips</span></div>
                   <div><b>6 of 8</b><span>Achievements</span></div>
                 </div>
@@ -1180,6 +1219,9 @@
 
               <div class="sec-head" style="margin-top:24px"><h3>Performance</h3></div>
               <div class="perf" id="homePerf"></div>
+
+              <div class="sec-head" style="margin-top:24px"><h3>Skill Map</h3><a href="#" data-goto="profile">Profile</a></div>
+              <div data-skillmap="mobile"></div>
 
               <div class="sec-head" style="margin-top:24px"><h3>Friends Activity</h3></div>
               <div class="act-list" id="homeFriends"></div>
@@ -1212,7 +1254,7 @@
             <div class="screen" data-screen="library">
               <div class="m-head">
                 <div class="t"><h2>Library</h2></div>
-                <button class="icon-btn" aria-label="Sort library" data-toast="Sorted by most played"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 4v13M7 17l-3-3M7 17l3-3M17 20V7M17 7l-3 3M17 7l3 3"/></svg></button>
+                <button class="icon-btn" aria-label="Sort library" data-toast="Sorted by rating"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 4v13M7 17l-3-3M7 17l3-3M17 20V7M17 7l-3 3M17 7l3 3"/></svg></button>
               </div>
               <div class="ach-grid" id="libGrid" style="margin-top:2px"></div>
             </div>
@@ -1266,7 +1308,9 @@
                   <p>Insight: you play better on weekends — win rate jumps 18% Sat–Sun.</p>
                 </div>
               </div>
-              <button class="presence" id="mPresence">
+              <div class="sec-head" style="margin-top:24px"><h3>Skill Map</h3></div>
+              <div data-skillmap="mobile"></div>
+              <button class="presence" id="mPresence" style="margin-top:22px">
                 <span class="pdot"></span>
                 <span style="flex:1;min-width:0"><b>Discord Rich Presence — Live</b><span>Playing Fortnite · Zero Build — in lobby, 24 min</span></span>
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.93-1.51 13.78 13.78 0 0 0-.64 1.28 18.27 18.27 0 0 0-5.5 0 13.78 13.78 0 0 0-.64-1.28c-1.71.29-3.36.8-4.93 1.51A20.3 20.3 0 0 0 .1 18.06a19.9 19.9 0 0 0 6.04 3.03c.49-.66.93-1.37 1.3-2.1a12.9 12.9 0 0 1-2.05-.98c.17-.12.34-.25.5-.38a14.2 14.2 0 0 0 12.22 0c.16.13.33.26.5.38-.65.38-1.34.71-2.05.98.37.73.81 1.44 1.3 2.1a19.84 19.84 0 0 0 6.04-3.03 20.24 20.24 0 0 0-3.58-13.69ZM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42s.95-2.42 2.16-2.42 2.18 1.09 2.16 2.42c0 1.34-.95 2.42-2.16 2.42Zm7.96 0c-1.18 0-2.16-1.08-2.16-2.42s.95-2.42 2.16-2.42 2.18 1.09 2.16 2.42c0 1.34-.95 2.42-2.16 2.42Z"/></svg>
@@ -1274,7 +1318,7 @@
               <div class="heat">
                 <div class="sec-head"><h3 style="font-size:14px">Activity — last 20 weeks</h3><a href="#" data-dead>2026</a></div>
                 <div class="h-grid" id="heatGrid" aria-hidden="true"></div>
-                <div class="h-lab"><span>LESS</span><span>412 HRS THIS YEAR</span><span>MORE</span></div>
+                <div class="h-lab"><span>LESS</span><span>PEAK: WEEKENDS</span><span>MORE</span></div>
               </div>
               <div class="sec-head" style="margin-top:24px"><h3>Recent Clips</h3><a href="#" data-goto="clips">See all</a></div>
               <div class="clips-grid" id="mClips"></div>
@@ -1299,7 +1343,7 @@
                 <div class="rate-row" id="dRate"></div>
                 <div class="d-stats">
                   <div class="ds"><b id="dAch">55/80</b><span>Achievements</span></div>
-                  <div class="ds"><b id="dHrs">16.2</b><span>Hours played</span></div>
+                  <div class="ds"><b id="dRating">9.6</b><span>ARC rating</span></div>
                   <div class="ds"><b id="dLast">5 Dec</b><span>Last played</span></div>
                 </div>
                 <p class="d-desc"><span id="dDesc"></span> <button class="more" id="dMore" style="min-height:32px;padding:0 2px">Show more</button></p>
@@ -1467,7 +1511,7 @@
                 </div>
                 <p class="ovw-note">Top 8% of Fortnite players · win rate up 18% on weekends</p>
                 <div class="ovw-stats">
-                  <div><b>412.6</b><span>Hours — Fortnite</span></div>
+                  <div><b>Top 8%</b><span>Fortnite rank</span></div>
                   <div><b>34</b><span>Clips</span></div>
                   <div><b>6 of 8</b><span>Achievements</span></div>
                   <div><b>2,847</b><span>Matches tracked</span></div>
@@ -1482,6 +1526,11 @@
               <div class="d-sec">
                 <div class="sec-head"><h3>Performance</h3></div>
                 <div class="perf" id="dPerf"></div>
+              </div>
+
+              <div class="d-sec">
+                <div class="sec-head"><h3>Skill Map</h3><a href="#" data-dgoto="profile">Profile</a></div>
+                <div data-skillmap="desktop"></div>
               </div>
 
               <div class="d-sec">
@@ -1624,10 +1673,12 @@
                     </button>
                   </div>
                 </div>
-                <div class="heat">
+                <div class="sec-head" style="margin-top:24px"><h3>Skill Map</h3></div>
+                <div data-skillmap="desktop"></div>
+                <div class="heat" style="margin-top:22px">
                   <div class="sec-head"><h3 style="font-size:14px">Activity — last 20 weeks</h3><a href="#" data-dead>2026</a></div>
                   <div class="h-grid" id="dHeatGrid" aria-hidden="true"></div>
-                  <div class="h-lab"><span>LESS</span><span>412 HRS THIS YEAR</span><span>MORE</span></div>
+                  <div class="h-lab"><span>LESS</span><span>PEAK: WEEKENDS</span><span>MORE</span></div>
                 </div>
                 <div class="sec-head" style="margin-top:24px"><h3>Recent Clips</h3><a href="#" data-dgoto="clips">See all</a></div>
                 <div class="clips-grid d-clips" id="dProfClips"></div>
@@ -1677,7 +1728,7 @@
                 <div class="rate-row" id="ddRate"></div>
                 <div class="d-stats">
                   <div class="ds"><b id="ddAch">55/80</b><span>Achievements</span></div>
-                  <div class="ds"><b id="ddHrs">16.2</b><span>Hours played</span></div>
+                  <div class="ds"><b id="ddRating">9.6</b><span>ARC rating</span></div>
                   <div class="ds"><b id="ddLast">5 Dec</b><span>Last played</span></div>
                 </div>
                 <p class="d-desc"><span id="ddDesc"></span> <button class="more" id="ddMore" style="min-height:32px;padding:0 2px">Show more</button></p>
@@ -1902,7 +1953,8 @@
         $("#mEmpty").classList.toggle("show", trend.children.length === 0);
       }
       /* library — collectible flip cards, exactly like the Achievements Vault.
-         Front: full-color art. Back: how long you've played. */
+         Front: full-color art. Back: your rating in that game. ARC rates
+         skill — playtime is never converted into days of your life. */
       function addCardTilt(card){
         if (reduced) return;
         card.addEventListener("pointermove", e => {
@@ -1915,17 +1967,15 @@
         card.addEventListener("pointerleave", () => { card.style.transform = ""; });
       }
       function libCardEl(g, onOpen, onProgress){
-        const hrsNum = parseFloat(g.hrs);
-        const days = (hrsNum / 24).toFixed(1).replace(/\.0$/, "");
         const card = document.createElement("button");
         card.className = "ccard";
-        card.setAttribute("aria-label", g.name + " library card. Tap to flip and see how long you've played and your progress chart.");
+        card.setAttribute("aria-label", g.name + " library card. Tap to flip and see your rating in this game and your progress chart.");
         card.innerHTML = `<span class="cc-inner">
           <span class="cc-face cc-front"><img src="${g.img}" alt="${g.name} key art" /><span class="cc-shade"></span><span class="cc-shine"></span>
             <span class="cc-top" style="justify-content:flex-end"><span class="cc-ed">GQ ${g.score}</span></span>
             <span class="cc-bot"><b>${g.name}</b><span>${g.genre} / ${g.sub}</span></span></span>
           <span class="cc-face cc-back lib-back"><h5>${g.name}</h5><span class="cb-rar">${g.genre} / ${g.sub}</span>
-            <span class="lib-pt"><span class="pt-lab">How long you've played</span><span class="pt-row"><span class="pt-num">${g.hrs}</span><span class="pt-unit">hours</span></span><span class="pt-sub">That's ${days} full day${days === "1" ? "" : "s"} in this game, all-time.</span></span>
+            <span class="lib-pt"><span class="pt-lab">Your rating in this game</span><span class="pt-row"><span class="pt-num">${g.score}</span><span class="pt-unit">/ 10 ARC rating</span></span><span class="pt-sub">One piece of your Skill Map — check your Profile to see every game on one map.</span></span>
             <dl><div><dt>Achievements</dt><dd>${g.ach}</dd></div><div><dt>Last played</dt><dd>${g.last}</dd></div></dl>
             <span class="lib-prog-btn" data-progress role="button" aria-label="View ${g.name} progress chart"><span>See more — view progress</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
             <span class="cb-foot"><span class="lib-open" data-open>Open game →</span><b>GQ ${g.score}</b></span></span>
@@ -1950,7 +2000,7 @@
         $("#dImg").src = g.img; $("#dImg").alt = g.name + " key art";
         $("#dName").textContent = g.name; $("#dSub").textContent = g.sub; $("#dGenre").textContent = g.genre;
         $("#dRate").innerHTML = ratingHTML(g);
-        $("#dAch").textContent = g.ach; $("#dHrs").textContent = g.hrs; $("#dLast").textContent = g.last;
+        $("#dAch").textContent = g.ach; $("#dRating").textContent = g.score; $("#dLast").textContent = g.last;
         $("#dDesc").textContent = g.desc; $("#dMore").textContent = "Show more";
         $("#dFav").classList.remove("on"); $("#dDl").classList.remove("on");
         const sim = $("#dSimilar"); sim.innerHTML = "";
@@ -2238,7 +2288,7 @@
         $("#ddImg").src = g.img; $("#ddImg").alt = g.name + " key art";
         $("#ddName").textContent = g.name; $("#ddSub").textContent = g.sub; $("#ddGenre").textContent = g.genre;
         $("#ddRate").innerHTML = ratingHTML(g);
-        $("#ddAch").textContent = g.ach; $("#ddHrs").textContent = g.hrs; $("#ddLast").textContent = g.last;
+        $("#ddAch").textContent = g.ach; $("#ddRating").textContent = g.score; $("#ddLast").textContent = g.last;
         $("#ddDesc").textContent = g.desc; $("#ddMore").textContent = "Show more";
         $("#ddFav").classList.remove("on"); $("#ddDl").classList.remove("on");
         const sim = $("#ddSimilar"); sim.innerHTML = "";
@@ -2467,7 +2517,7 @@
             cell(winRate + "%", "Win rate", green + " of " + data.length + " blocks green", green * 2 >= data.length ? "tv-up" : "tv-down") +
             cell(fmtDelta(st.metric, best.c - best.o), "Best block", fmtDate(best.d), "tv-up") +
             cell(fmtDelta(st.metric, worst.c - worst.o), "Worst block", fmtDate(worst.d), "tv-down") +
-            cell(String(data.length), "Blocks tracked", g.hrs + " hrs all-time");
+            cell(String(data.length), "Blocks tracked", "Rated " + g.score + " in " + g.name);
           let streak = 0; const upLast = last.c >= last.o;
           for (let i = data.length - 1; i >= 0; i--){ if ((data[i].c >= data[i].o) === upLast) streak++; else break; }
           els.insight.innerHTML = "Best block was <b>" + fmtDate(best.d) + " (" + fmtDelta(st.metric, best.c - best.o) + " " + METRIC_LAB[st.metric] + ")</b>. You're on a <b>" + streak + "-candle " + (upLast ? "green" : "red") + " streak</b> — your " + METRIC_LAB[st.metric] + " is " + (last.c >= first.o ? "up" : "down") + " " + Math.abs(chgPct).toFixed(1) + "% over the " + TF_LAB[st.tf] + ".";
@@ -2574,6 +2624,54 @@
       const dAchGrid = $("#dAchGrid");
       ACH.forEach(a => dAchGrid.appendChild(buildAchCard(a)));
       [["Hitless Destined One", "Clear Black Myth: Wukong hitless to reveal this card."], ["Perfect Set", "Go 100–0 across a full ranked set to reveal this card."]].forEach(([t, hint]) => dAchGrid.appendChild(buildLockedCard(t, hint)));
+
+      /* ---------------- skill map — how good you are, across every game ----------------
+         The whole point of ARC on one map: you in the center, your core skills
+         branching out as a mind map, and every game as a node on one skill
+         tree — GQ, tier, strongest skill, and the climb to the next tier.
+         Levels come from the same per-game ratings the progress charts use.
+         Tapping a game node opens that game's candle chart. */
+      const CORE_SKILLS = [
+        { name:"Clutch", level:91, from:"Fortnite · Valorant — final rounds, 1v4s" },
+        { name:"Aim", level:86, from:"Valorant · Fortnite — first-bloods, headshots" },
+        { name:"Movement", level:82, from:"Rocket League · Apex — aerials, rotations" },
+        { name:"Game Sense", level:78, from:"Fortnite · Warzone — calls, positioning" },
+        { name:"Team Play", level:74, from:"Squad games — revives, comms, setups" },
+        { name:"Consistency", level:69, from:"Your ceiling is set — weekends are your peak" }
+      ];
+      const GAME_STRONG = { fortnite:"Clutch", valorant:"Aim", rocket:"Movement", minecraft:"Game Sense", eldenring:"Game Sense", cod:"Team Play", apex:"Movement", wukong:"Consistency" };
+      function tierFor(gq){
+        if (gq >= 550) return { name:"Platinum", next:null, nextName:"" };
+        if (gq >= 500) return { name:"Gold", next:550, nextName:"Platinum" };
+        if (gq >= 450) return { name:"Silver", next:500, nextName:"Gold" };
+        return { name:"Bronze", next:450, nextName:"Silver" };
+      }
+      function skillMapHTML(){
+        const nodes = CORE_SKILLS.map(s =>
+          '<div class="snode"><div class="snode-top"><b>' + s.name + '</b><span class="slvl">' + s.level + '<small> / 100</small></span></div>' +
+          '<span class="sfrom">' + s.from + '</span><div class="sbar"><i style="width:' + s.level + '%"></i></div></div>'
+        ).join("");
+        const rows = GAMES.slice().sort((a, b) => PROG[b.id].gq - PROG[a.id].gq).map(g => {
+          const q = PROG[g.id].gq, t = tierFor(q);
+          const pct = t.next ? Math.max(4, Math.min(100, Math.round((q - (t.next - 50)) / 50 * 100))) : 100;
+          const nextTxt = t.next ? (t.next - q) + " to " + t.nextName : "Top tier";
+          return '<button class="sgame" data-sgame="' + g.id + '" aria-label="' + g.name + ' — GQ ' + q + ', ' + t.name + '. View its progress chart.">' +
+            '<span class="sdot" aria-hidden="true"></span>' +
+            '<span class="sg-t"><b>' + g.name + '</b><span>GQ ' + q + ' · ' + t.name + ' · Strongest: ' + GAME_STRONG[g.id] + '</span></span>' +
+            '<span class="sg-next"><b>' + nextTxt + '</b><span class="sg-bar"><i style="width:' + pct + '%"></i></span></span></button>';
+        }).join("");
+        return '<div class="smap-core"><span class="sc-lab">You · Across every game</span><b>538</b><span class="sc-sub">Overall ARC rating · Gold</span></div>' +
+          '<div class="smap-stem" aria-hidden="true"></div>' +
+          '<div class="smap-grid">' + nodes + '</div>' +
+          '<div class="smap-treehead">Skill tree — by game<span>Tap a game for its chart</span></div>' +
+          '<div class="stree">' + rows + '</div>';
+      }
+      $$("[data-skillmap]").forEach(mount => {
+        mount.classList.add("smap");
+        mount.innerHTML = skillMapHTML();
+        const desk = mount.dataset.skillmap === "desktop";
+        $$("[data-sgame]", mount).forEach(b => b.addEventListener("click", () => { if (desk) openProgressD(b.dataset.sgame); else openProgressM(b.dataset.sgame); }));
+      });
 
       /* ---------------- clip uploads — your own videos, in your library ----------------
          Every upload spot (mobile Clips screen, desktop Clips view, the + sheet,
